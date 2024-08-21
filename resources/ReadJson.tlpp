@@ -1,0 +1,51 @@
+#include 'protheus.ch'
+
+/*/{Protheus.doc} ReadJson
+(long_description)
+@type user function
+@author user
+@since 20/08/2024
+@version 1.0
+/*/
+User Function ReadJson()
+Local cFile := '\testeJson\exemplo2.json'
+Local cJsonStr
+Local oJson
+Local nId, cNome, cNomer
+
+// Le a string JSON do arquivo do disco 
+cJsonStr := readfile(cFile)
+
+// Cria o objeto JSON e popula ele a partir da string
+oJson := JSonObject():New()
+cErr  := oJSon:fromJson(cJsonStr)
+
+If !empty(cErr)
+  MsgStop(cErr,"JSON PARSE ERROR")
+  Return
+Endif
+
+// Agora vamos ler as propriedades com GetJSonObject()
+nId := oJson:GetJSonObject('a1_cod')
+cNome := oJson:GetJSonObject('a1_nome')
+cNomer := oJson:GetJSonObject('a1_nreduz')
+FreeObj(oJson)
+
+Return
+
+STATIC Function ReadFile(cFile)
+Local cBuffer := ''
+Local nH
+Local nTam
+
+nH := Fopen(cFile)
+IF nH != -1
+    nTam := fSeek(nH,0,2)
+    fSeek(nH,0)
+    cBuffer := space(nTam)
+    fRead(nH,@cBuffer,nTam)
+    fClose(nH)
+Else
+    MsgStop("Falha na abertura do arquivo ["+cFile+"]","FERROR "+cValToChar(Ferror()))
+Endif
+Return cBuffer
