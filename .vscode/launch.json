@@ -7,7 +7,7 @@
 			"name": "Totvs Language Debug",
 			"program": "${command:AskForProgramName}",
 			"cwb": "${workspaceFolder}",
-			"smartclientBin": "E:/totvs/producao_test/protheus12/bin/smartclient/smartclient.exe",
+			"smartclientBin": "E:/Smartclients/smartclient_producao_test_1212310/smartclient.exe",
 			"isMultiSession": true,
 			"enableTableSync": true
 		}
@@ -21,7 +21,10 @@
 		},
 		{
 			"label": "SIGAATF"
+		},
+		{
+			"label": "U_zMiniForm"
 		}
 	],
-	"lastProgramExecuted": "SIGAATF"
+	"lastProgramExecuted": "U_zMiniForm"
 }

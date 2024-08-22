@@ -1,0 +1,88 @@
+#include "Totvs.ch"
+
+
+/*/{Protheus.doc} OpenJson
+    (Abrir os arquivos JSON passados para ele)
+    @author Hamir Dhanquer
+    @since 21/08/2024
+    @version 1.0
+/*/
+Class OpenJson
+    private data cFile as character
+
+    public method New()
+    public method ReadJson()
+    private method ReadFile()
+EndClass
+
+/*/{Protheus.doc} New
+    (long_description)
+    @author Hamir Dhanquer
+    @since 21/08/2024
+    @version 1.0
+    @param 
+    @return 
+/*/
+Method New(cDatasource) Class OpenJson
+    ::cFile := '\testeJson\'+ cDatasource +'.json'
+Return Self 
+
+
+/*/{Protheus.doc} ReadJson
+    (long_description)
+    @author Hamir Dhanquer
+    @since 21/08/2024
+    @version 1.0
+    @param param_name, param_type, param_descr
+    @return return_var, return_type, return_description
+/*/
+Method ReadJson() Class OpenJson
+//Local cFile := '\testeJson\exemplo2.json'
+Local cJsonStr
+Local oJson
+Local nId, cNome, cNomer
+
+// Le a string JSON do arquivo do disco 
+cJsonStr := :ReadFile(cFile)
+
+// Cria o objeto JSON e popula ele a partir da string
+oJson := JSonObject():New()
+cErr  := oJSon:fromJson(cJsonStr)
+
+If !empty(cErr)
+  MsgStop(cErr,"JSON PARSE ERROR")
+  Return
+Endif
+
+// Agora vamos ler as propriedades com GetJSonObject()
+nId := oJson:GetJSonObject('a1_cod')
+cNome := oJson:GetJSonObject('a1_nome')
+cNomer := oJson:GetJSonObject('a1_nreduz')
+FreeObj(oJson)
+Return
+
+
+/*/{Protheus.doc} ReadFile
+    (long_description)
+    @author Hamir Dhanquer
+    @since 21/08/2024
+    @version 1.0
+    @param param_name, param_type, param_descr
+    @return return_var, return_type, return_description
+/*/
+Method ReadFile(cFile) Class OpenJson
+    Local cBuffer := ''
+    Local nH
+    Local nTam
+
+    nH := Fopen(cFile)
+    IF nH != -1
+        nTam := fSeek(nH,0,2)
+        fSeek(nH,0)
+        cBuffer := space(nTam)
+        fRead(nH,@cBuffer,nTam)
+        fClose(nH)
+    Else
+        MsgStop("Falha na abertura do arquivo ["+cFile+"]","FERROR "+cValToChar(Ferror()))
+    Endif
+Return cBuffer
