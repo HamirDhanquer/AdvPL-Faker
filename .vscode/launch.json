@@ -24,7 +24,10 @@
 		},
 		{
 			"label": "U_zMiniForm"
+		},
+		{
+			"label": "U_executil"
 		}
 	],
-	"lastProgramExecuted": "U_zMiniForm"
+	"lastProgramExecuted": "U_executil"
 }

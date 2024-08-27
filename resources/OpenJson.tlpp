@@ -9,6 +9,7 @@
 /*/
 Class OpenJson
     private data cFile as character
+    private data cDsource as character
 
     public method New()
     public method ReadJson()
@@ -24,7 +25,8 @@ EndClass
     @return 
 /*/
 Method New(cDatasource) Class OpenJson
-    ::cFile := '\testeJson\'+ cDatasource +'.json'
+    ::cDsource := cDatasource
+    ::cFile := '\fkdir\json\'+ cDatasource +'.json'
 Return Self 
 
 
@@ -33,33 +35,28 @@ Return Self
     @author Hamir Dhanquer
     @since 21/08/2024
     @version 1.0
-    @param param_name, param_type, param_descr
-    @return return_var, return_type, return_description
 /*/
 Method ReadJson() Class OpenJson
-//Local cFile := '\testeJson\exemplo2.json'
-Local cJsonStr
-Local oJson
-Local nId, cNome, cNomer
+    Local cJsonStr
+    Local oJson
+    Local oResult
+    Local nId, cNome, cNomer
 
-// Le a string JSON do arquivo do disco 
-cJsonStr := :ReadFile(cFile)
+    // Le a string JSON do arquivo do disco 
+    cJsonStr := ::ReadFile(::cFile)
 
-// Cria o objeto JSON e popula ele a partir da string
-oJson := JSonObject():New()
-cErr  := oJSon:fromJson(cJsonStr)
+    // Cria o objeto JSON e popula ele a partir da string
+    oJson := JSonObject():New()
+    cErr  := oJSon:fromJson(cJsonStr)
 
-If !empty(cErr)
-  MsgStop(cErr,"JSON PARSE ERROR")
-  Return
-Endif
+    If !empty(cErr)
+    MsgStop(cErr,"JSON PARSE ERROR")
+    Return
+    Endif
 
-// Agora vamos ler as propriedades com GetJSonObject()
-nId := oJson:GetJSonObject('a1_cod')
-cNome := oJson:GetJSonObject('a1_nome')
-cNomer := oJson:GetJSonObject('a1_nreduz')
-FreeObj(oJson)
-Return
+    oResult := oJson:GetJSonObject(cDsource)
+    FreeObj(oJson)
+Return oResult
 
 
 /*/{Protheus.doc} ReadFile
@@ -70,6 +67,7 @@ Return
     @param param_name, param_type, param_descr
     @return return_var, return_type, return_description
 /*/
+// TODO checar se existe o datasource.
 Method ReadFile(cFile) Class OpenJson
     Local cBuffer := ''
     Local nH

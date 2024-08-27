@@ -16,5 +16,6 @@ User Function advpl_faker()
 
     Local oFaker 
 
-    oFaker := ReadJson('exemplo2')
+    oFaker := OpenJson():New('fantasia')
+    oFaker:ReadJson()
 Return 
