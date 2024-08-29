@@ -12,10 +12,12 @@
 (examples)
 @see (links_or_references)
 /*/
-User Function advpl_faker()
+User Function Faker()
 
     Local oFaker 
 
-    oFaker := OpenJson():New('fantasia')
-    oFaker:ReadJson()
+    oFaker := AdvPLFaker():New()
+
+    MsgInfo(oFaker:RazaoSocial())
+    MsgInfo(oFaker:Fantasia())
 Return 

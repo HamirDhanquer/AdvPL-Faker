@@ -64,8 +64,6 @@ Return oResult
     @author Hamir Dhanquer
     @since 21/08/2024
     @version 1.0
-    @param param_name, param_type, param_descr
-    @return return_var, return_type, return_description
 /*/
 // TODO checar se existe o datasource.
 Method ReadFile(cFile) Class OpenJson

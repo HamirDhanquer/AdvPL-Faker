@@ -29,5 +29,6 @@
 			"label": "U_executil"
 		}
 	],
-	"lastProgramExecuted": "U_executil"
+	"lastProgramExecuted": "U_executil",
+	"lastProgramArguments": []
 }

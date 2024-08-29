@@ -1,0 +1,131 @@
+#include "Totvs.ch"
+
+/*/{Protheus.doc} AdvPLFaker
+    (long_description)
+    @author Hamir Dhanquer
+    @since 28/08/2024
+    @version 1.0
+/*/
+Class AdvPLFaker
+
+    private data cFile as character
+    private data cDatasource as character
+    private data nRandomNumber as integer  
+    private data oFaker as object
+
+    public Method New()
+    public Method RazaoSocial()
+    public Method Fantasia()
+    // TODO > Terminar o Basico para o cadastro de Clientes
+    public Method Nome()
+    public Method Cep()
+    public Method Email()
+    public Method UF()
+    public Method Municipio()
+    public Method Endereco()
+
+    private Method Faker()
+    private Method ReadJson()
+    private Method ReadFile()
+EndClass
+
+/*/{Protheus.doc} New
+    (long_description)
+    @author Hamir Dhanquer
+    @since 28/08/2024
+    @version 1.0
+/*/
+Method New() Class AdvPLFaker
+    
+    ::nRandomNumber := Randomize(1,50)
+Return Self
+
+/*/{Protheus.doc} RazaoSocial
+    (long_description)
+    @author Hamir Dhanquer
+    @since 28/08/2024
+    @version 1.0
+/*/
+Method RazaoSocial() Class AdvPLFaker
+    Local xResult, ::cDatasource := 'razao_social'
+    xResult := ::Faker()
+Return xResult
+
+/*/{Protheus.doc} RazaoSocial
+    (long_description)
+    @author Hamir Dhanquer
+    @since 28/08/2024
+    @version 1.0
+/*/
+Method Fantasia() Class AdvPLFaker
+    Local xResult, ::cDatasource := 'fantasia'
+    xResult := ::Faker()
+Return xResult
+
+/*/{Protheus.doc} methodName
+    (long_description)
+    @author user
+    @since 28/08/2024
+    @version1.0
+/*/
+Method Faker() Class AdvPLFaker
+    Local nNumber := ::nRandomNumber 
+    
+    ::cFile := '\fkdir\json\'+ ::cDatasource +'.json'
+    ::oFaker := ::ReadJson()
+Return ::oFaker[nNumber]
+
+
+/*/{Protheus.doc} ReadJson
+    (long_description)
+    @author Hamir Dhanquer
+    @since 21/08/2024
+    @version 1.0
+/*/
+Method ReadJson() Class AdvPLFaker
+    Local cJsonStr
+    Local oJson
+    Local oResult
+    Local nId, cNome, cNomer
+
+    // Le a string JSON do arquivo do disco 
+    cJsonStr := ::ReadFile(::cFile)
+
+    // Cria o objeto JSON e popula ele a partir da string
+    oJson := JSonObject():New()
+    cErr  := oJSon:fromJson(cJsonStr)
+
+    If !empty(cErr)
+    MsgStop(cErr,"JSON PARSE ERROR")
+    Return
+    Endif
+
+    oResult := oJson:GetJSonObject(::cDatasource)
+    FreeObj(oJson)
+Return oResult
+
+
+/*/{Protheus.doc} ReadFile
+    (long_description)
+    @author Hamir Dhanquer
+    @since 21/08/2024
+    @version 1.0
+/*/
+// TODO checar se existe o datasource.
+Method ReadFile(cFile) Class AdvPLFaker
+    Local cBuffer := ''
+    Local nH
+    Local nTam
+
+    nH := Fopen(cFile)
+    IF nH != -1
+        nTam := fSeek(nH,0,2)
+        fSeek(nH,0)
+        cBuffer := space(nTam)
+        fRead(nH,@cBuffer,nTam)
+        fClose(nH)
+    Else
+        MsgStop("Falha na abertura do arquivo ["+cFile+"]","FERROR "+cValToChar(Ferror()))
+    Endif
+Return cBuffer
+
