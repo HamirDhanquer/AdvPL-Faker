@@ -88,6 +88,8 @@ Method ReadJson() Class AdvPLFaker
     Local oResult
     Local nId, cNome, cNomer
 
+
+// CONSERTAR TESTE DO CONSERTO 
     // Le a string JSON do arquivo do disco 
     cJsonStr := ::ReadFile(::cFile)
 
@@ -111,7 +113,7 @@ Return oResult
     @since 21/08/2024
     @version 1.0
 /*/
-// TODO checar se existe o datasource.
+// BUG checar se existe o datasource.
 Method ReadFile(cFile) Class AdvPLFaker
     Local cBuffer := ''
     Local nH
